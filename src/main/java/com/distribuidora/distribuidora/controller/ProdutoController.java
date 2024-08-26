@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/produtos")
 public class ProdutoController {
     @Autowired
@@ -19,15 +20,27 @@ public class ProdutoController {
         return ResponseEntity.ok(novoProduto);
     }
 
+    @GetMapping("/listarProdutos")
+    public ResponseEntity<List<Produto>> listarProdutos() {
+        List<Produto> produtos = produtoService.listarProdutos();
+        return ResponseEntity.ok(produtos);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) {
+        Produto produto = produtoService.buscarProdutoPorId(id);
+        return ResponseEntity.ok(produto);
+    }
+
+    @PutMapping
+    public ResponseEntity<Produto> atualizarProduto(@RequestBody Produto produto) {
+        Produto produtoAtualizado = produtoService.atualizarProduto(produto);
+        return ResponseEntity.ok(produtoAtualizado);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
         produtoService.deletarProduto(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Produto>> listarProdutos() {
-        List<Produto> produtos = produtoService.listarProdutos();
-        return ResponseEntity.ok(produtos);
     }
 }

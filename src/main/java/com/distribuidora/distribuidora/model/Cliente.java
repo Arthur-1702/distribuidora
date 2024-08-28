@@ -120,4 +120,12 @@ public class Cliente {
         this.dtCadastro = LocalDate.now();
     }
 
+    public String getCgcEnt() {
+        throw new UnsupportedOperationException("Unimplemented method 'getCgcEnt'");
+    }
+
+    public Integer getCodCliente() {
+        throw new UnsupportedOperationException("Unimplemented method 'getCodCliente'");
+    }
+
 }

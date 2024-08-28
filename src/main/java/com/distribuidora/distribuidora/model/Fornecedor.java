@@ -95,4 +95,122 @@ public class Fornecedor {
         this.dtCadastro = LocalDate.now();
     }
 
+    //Faça os construtores
+    public Fornecedor() {
+    }
+
+    public Fornecedor(Integer codFornecedor, String nomeFornecedor, String cnpj, String enderecoComercial, String bairroComercial, String cidadeComercial, String ufComercial, String cepComercial, String ufEntrega, String cepEntrega, String ufCobranca, String cepCobranca, String telefone, String email, LocalDate dtCadastro) {
+        this.codFornecedor = codFornecedor;
+        this.nomeFornecedor = nomeFornecedor;
+        this.cnpj = cnpj;
+        this.enderecoComercial = enderecoComercial;
+        this.bairroComercial = bairroComercial;
+        this.cidadeComercial = cidadeComercial;
+        this.ufComercial = ufComercial;
+        this.cepComercial = cepComercial;
+        this.ufEntrega = ufEntrega;
+        this.cepEntrega = cepEntrega;
+        this.ufCobranca = ufCobranca;
+        this.cepCobranca = cepCobranca;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+    //Faça os getters e setters
+
+    public Integer getCodFornecedor() {
+        return codFornecedor;
+    }
+
+    public void setCodFornecedor(Integer codFornecedor) {
+        this.codFornecedor = codFornecedor;
+    }
+
+    public String getNomeFornecedor() {
+        return nomeFornecedor;
+    }
+
+    public void setNomeFornecedor(String nomeFornecedor) {
+        this.nomeFornecedor = nomeFornecedor;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getEnderecoComercial() {
+        return enderecoComercial;
+    }
+
+    public void setEnderecoComercial(String enderecoComercial) {
+        this.enderecoComercial = enderecoComercial;
+    }
+
+    public String getComplementoComercial() {
+        return complementoComercial;
+    }
+
+    public void setComplementoComercial(String complementoComercial) {
+        this.complementoComercial = complementoComercial;
+    }
+
+    public String getBairroComercial() {
+        return bairroComercial;
+    }
+
+    public void setBairroComercial(String bairroComercial) {
+        this.bairroComercial = bairroComercial;
+    }
+
+    public String getCidadeComercial() {
+        return cidadeComercial;
+    }
+
+    public void setCidadeComercial(String cidadeComercial) {
+        this.cidadeComercial = cidadeComercial;
+    }
+
+    public String getUfComercial() {
+        return ufComercial;
+    }
+
+    public void setUfComercial(String ufComercial) {
+        this.ufComercial = ufComercial;
+    }
+
+    public String getCepComercial() {
+        return cepComercial;
+    }
+
+    public void setCepComercial(String cepComercial) {
+        this.cepComercial = cepComercial;
+    }
+
+    public String getEnderecoEntrega() {
+        return enderecoEntrega;
+    }
+
+    public void setEnderecoEntrega(String enderecoEntrega) {
+        this.enderecoEntrega = enderecoEntrega;
+    }
+
+    public String getComplementoEntrega() {
+        return complementoEntrega;
+    }
+
+    public void setComplementoEntrega(String complementoEntrega) {
+        this.complementoEntrega = complementoEntrega;
+    }
+
+    public String getBairroEntrega() {
+        return bairroEntrega;
+    }
+
+    public void setBairroEntrega(String bairroEntrega) {
+        this.bairroEntrega = bairroEntrega;
+    }
 }

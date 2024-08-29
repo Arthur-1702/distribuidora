@@ -24,7 +24,7 @@ public class Produto {
     @JoinColumn(name = "CODCATEGORIA", nullable = false)
     private Categoria categoria;
 
-    @Column(name = "VOLUME", nullable = false, precision = 6, scale = 2)
+    @Column(name = "VOLUME", nullable = false)
     private BigDecimal volume;
 
     @ManyToOne

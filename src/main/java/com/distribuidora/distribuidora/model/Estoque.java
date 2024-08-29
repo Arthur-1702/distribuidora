@@ -30,8 +30,6 @@ public class Estoque {
 	@Column(name = "DTULTENTRADA")
 	private LocalDate dtUltEntrada;
 
-	@Column(name = "GIROPRODUTO", precision = 6, scale = 2)
+	@Column(name = "GIROPRODUTO")
 	private Double giroProduto;
-
-
 }

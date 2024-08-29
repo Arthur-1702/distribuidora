@@ -1,6 +1,8 @@
 package com.distribuidora.distribuidora.dto;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.time.LocalDate;
 
 public class ProdutoDTO {
     private String nomeProduto;
@@ -10,6 +12,7 @@ public class ProdutoDTO {
     private Long codEmbalagem;
     private String codFabrica;
     private String codigoBarras;
+    private LocalDate dtCadastro;
 
     // getters e setters
     public String getNomeProduto() {
@@ -66,5 +69,13 @@ public class ProdutoDTO {
 
     public void setCodEmbalagem(long codEmbalagem) {
         this.codEmbalagem = codEmbalagem;
+    }
+
+    public LocalDate getDtCadastro() {
+        return dtCadastro;
+    }
+
+    public void setDtCadastro(LocalDate dtCadastro) {
+        this.dtCadastro = dtCadastro;
     }
 }

@@ -46,12 +46,21 @@ public class ProdutoService {
     public Produto updateProduto(Long id, ProdutoDTO produtoDTO) {
         Produto existingProduto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
-
+    
         // Mapear dados atualizados do DTO para a entidade existente
         Produto updatedProduto = mapDtoToEntity(produtoDTO);
+    
+        // Manter o código do produto existente
         updatedProduto.setCodProduto(existingProduto.getCodProduto());
+    
+        // Manter ou definir a data de cadastro
+        if (updatedProduto.getDtCadastro() == null) {
+            updatedProduto.setDtCadastro(existingProduto.getDtCadastro());
+        }
+    
         return produtoRepository.save(updatedProduto);
     }
+    
 
     public void deleteProduto(Long id) {
         Produto produto = produtoRepository.findById(id)

@@ -1,8 +1,10 @@
 package com.distribuidora.distribuidora.controller;
 
+import com.distribuidora.distribuidora.dto.ClienteDTO;
 import com.distribuidora.distribuidora.model.Cliente;
 import com.distribuidora.distribuidora.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -16,11 +18,16 @@ public class ClienteController {
      @Autowired
     private ClienteService clienteService;
     
-    @PostMapping
-     public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
-        Cliente novoCliente = clienteService.cadastrarCliente(cliente);
-        return ResponseEntity.ok(novoCliente);
+    @PostMapping("/criarCliente")
+     public ResponseEntity<Cliente> criarCliente(@RequestBody ClienteDTO cliente) {
+        try{
+            Cliente novoCliente = clienteService.cadastrarCliente(cliente);
+            return ResponseEntity.ok(novoCliente);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+        
 
     @GetMapping("/listarClientes")
     public ResponseEntity<List<Cliente>> listarClientes() {

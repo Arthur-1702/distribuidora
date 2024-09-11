@@ -6,17 +6,17 @@ import com.distribuidora.distribuidora.model.Cliente;
 import java.util.Optional;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     // Consulta para verificar se existe um cliente com o CNPJ/CPF fornecido
     boolean existsByCgcEnt(String cgcEnt);
 
     // Consulta para verificar se existe um cliente com o código único fornecido
-    boolean existsByCodCliente(Integer codCliente);
+    boolean existsByCodCliente(Long codCliente);
 
     // Consulta para encontrar um cliente pelo CNPJ/CPF
     Optional<Cliente> findByCgcEnt(String cgcEnt);
 
     // Consulta para encontrar um cliente pelo código único
-    Optional<Cliente> findByCodCliente(Integer codCliente);
+    Optional<Cliente> findByCodCliente(Long codCliente);
 }

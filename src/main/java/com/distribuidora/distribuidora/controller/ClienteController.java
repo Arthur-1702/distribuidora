@@ -28,7 +28,6 @@ public class ClienteController {
         }
     }
         
-
     @GetMapping("/listarClientes")
     public ResponseEntity<List<Cliente>> listarClientes() {
         List<Cliente> clientes = clienteService.listarClientes();
@@ -36,18 +35,18 @@ public class ClienteController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
         Cliente cliente = clienteService.buscarClientePorId(id);
         return ResponseEntity.ok(cliente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
         return ResponseEntity.ok(clienteService.atualizar(id, cliente));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Integer id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         clienteService.excluir(id);
         return ResponseEntity.noContent().build();
     }

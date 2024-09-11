@@ -60,7 +60,6 @@ public class ProdutoService {
     
         return produtoRepository.save(updatedProduto);
     }
-    
 
     public void deleteProduto(Long id) {
         Produto produto = produtoRepository.findById(id)

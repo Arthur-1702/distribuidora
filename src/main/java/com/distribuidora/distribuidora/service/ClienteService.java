@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.distribuidora.distribuidora.dto.ClienteDTO;
 import com.distribuidora.distribuidora.exception.ResourceNotFoundException;
 import com.distribuidora.distribuidora.model.Cliente;
+import com.distribuidora.distribuidora.model.PlanoPagamento;
 import com.distribuidora.distribuidora.repository.ClienteRepository;
+import com.distribuidora.distribuidora.repository.PlanoPagamentoRepository;
 
 import java.util.List;
 
@@ -16,33 +18,47 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private PlanoPagamentoRepository planoPagamentoRepository;
+
     public Cliente cadastrarCliente(ClienteDTO clienteDTO) {
         Cliente cliente = mapDtoToEntity(clienteDTO);
+        validarCnpj(cliente.getCgcEnt());
+
         return clienteRepository.save(cliente);
     }
     
-
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarClientePorId(Integer id) {
+    public Cliente buscarClientePorId(Long id) {
         return clienteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
     }
 
-    @Transactional
-    public Cliente atualizar(Integer id, Cliente clienteAtualizado) {
-        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-                validarCnpj(clienteAtualizado.getCgcEnt());
-                validarCodigoUnico(clienteAtualizado.getCodCliente());    
-                    if (temTransacoesPendentes(clienteExistente)) {
-                        throw new RuntimeException("Não é possível atualizar um cliente com transações pendentes.");
-                    }
-         return clienteRepository.save(clienteExistente);
+    public Cliente atualizar(Long id, ClienteDTO clienteDTO) {
+        Cliente clienteExistente = clienteRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        if (temTransacoesPendentes(clienteExistente)) {
+            throw new RuntimeException("Não é possível atualizar um cliente com transações pendentes.");
+        }
+
+        Cliente clienteAtualizado = mapDtoToEntity(clienteDTO);
+        
+         // Manter o código do produto existente
+         clienteAtualizado.setCodCliente(clienteExistente.getCodCliente());
+    
+         // Manter ou definir a data de cadastro
+         if (clienteAtualizado.getDtCadastro() == null) {
+            clienteAtualizado.setDtCadastro(clienteExistente.getDtCadastro());
+         }
+
+        return clienteRepository.save(clienteAtualizado);
     }
 
     @Transactional
-    public void excluir(Integer id) {
+    public void excluir(Long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         if (temTransacoesPendentes(cliente)) {
             throw new RuntimeException("Não é possível excluir um cliente com transações pendentes.");
@@ -60,7 +76,7 @@ public class ClienteService {
         }
     }
 
-    private void validarCodigoUnico(Integer codCliente) {
+    private void validarCodigoUnico(Long codCliente) {
         // Lógica para validar o código único do cliente
         if (clienteRepository.existsByCodCliente(codCliente)) {
             throw new RuntimeException("Código de cliente já cadastrado.");
@@ -77,9 +93,11 @@ public class ClienteService {
         return true; // Substituir com a lógica real
     }
     public Cliente mapDtoToEntity(ClienteDTO clienteDTO) {
+        PlanoPagamento planoPagamento = planoPagamentoRepository.findById(clienteDTO.getPrazoPagamento())
+                .orElseThrow(() -> new ResourceNotFoundException("Plano Pagamento não encontrado"));
+
         Cliente cliente = new Cliente();
 
-        cliente.setCodCliente(clienteDTO.getCodCliente());
         cliente.setNomeCliente(clienteDTO.getNomeCliente());
         cliente.setCgcEnt(clienteDTO.getCgcEnt());
         cliente.setRamoAtividade(clienteDTO.getRamoAtividade());
@@ -113,10 +131,7 @@ public class ClienteService {
         cliente.setContatoNome3(clienteDTO.getContatoNome3());
         cliente.setContatoCpf3(clienteDTO.getContatoCpf3());
         cliente.setDtCadastro(clienteDTO.getDtCadastro());
-
-        // Se houver necessidade de mapear o plano de pagamento:
-        // cliente.setPlanoPagamento(clienteDTO.getPlanoPagamento());
-
+        cliente.setPlanoPagamento(planoPagamento);
         return cliente;
     }
 }

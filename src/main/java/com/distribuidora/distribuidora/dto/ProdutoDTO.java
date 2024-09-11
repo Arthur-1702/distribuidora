@@ -1,7 +1,6 @@
 package com.distribuidora.distribuidora.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.time.LocalDate;
 
 public class ProdutoDTO {

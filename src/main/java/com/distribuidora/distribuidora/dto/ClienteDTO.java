@@ -3,8 +3,7 @@ package com.distribuidora.distribuidora.dto;
 import java.time.LocalDate;
 
 public class ClienteDTO {
-
-    private Integer codCliente;
+    private Long prazoPagamento; 
     private String nomeCliente;
     private String cgcEnt; // Pode ser usado tanto para CNPJ quanto para CPF
     private String ramoAtividade;
@@ -41,14 +40,14 @@ public class ClienteDTO {
 
     // Getters e Setters
 
-    public Integer getCodCliente() {
-        return codCliente;
+    public Long getPrazoPagamento() {
+        return prazoPagamento;
     }
 
-    public void setCodCliente(Integer codCliente) {
-        this.codCliente = codCliente;
+    public void setPrazoPagamento(Long prazoPagamento) {
+        this.prazoPagamento = prazoPagamento;
     }
-
+    
     public String getNomeCliente() {
         return nomeCliente;
     }

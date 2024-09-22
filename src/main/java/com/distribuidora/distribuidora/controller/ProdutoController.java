@@ -17,36 +17,52 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @PostMapping("/criarProduto")
-    public ResponseEntity<Produto> criarProduto(@RequestBody ProdutoDTO produto) {
+    public ResponseEntity<String> criarProduto(@RequestBody ProdutoDTO produto) {
         try {
             Produto novoProduto = produtoService.createProduto(produto);
-            return ResponseEntity.ok(novoProduto);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto criado com sucesso! Produto: "+novoProduto);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
         }
     }
 
     @GetMapping("/listarProdutos")
     public ResponseEntity<List<Produto>> listarProdutos() {
-        List<Produto> produtos = produtoService.getAllProdutos();
-        return ResponseEntity.ok(produtos);
+        try {
+            List<Produto> produtos = produtoService.getAllProdutos();
+            return ResponseEntity.ok(produtos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) {
-        Produto produto = produtoService.getProdutoById(id);
-        return ResponseEntity.ok(produto);
+        try {
+            Produto produto = produtoService.getProdutoById(id);
+            return ResponseEntity.ok(produto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
-        Produto updatedProduto = produtoService.updateProduto(id, produtoDTO);
-        return ResponseEntity.ok(updatedProduto);
+    public ResponseEntity<String> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
+        try {
+            Produto updatedProduto = produtoService.updateProduto(id, produtoDTO);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto atualizado com sucesso! Produto: " + updatedProduto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
+        }
     } 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
-        produtoService.deleteProduto(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deletarProduto(@PathVariable Long id) {
+        try {
+            produtoService.deleteProduto(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! Id: " + id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
+        }
     }
 }

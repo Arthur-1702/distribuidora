@@ -19,35 +19,52 @@ public class ClienteController {
     private ClienteService clienteService;
     
     @PostMapping("/criarCliente")
-     public ResponseEntity<Cliente> criarCliente(@RequestBody ClienteDTO cliente) {
+     public ResponseEntity<String> criarCliente(@RequestBody ClienteDTO cliente) {
         try{
             Cliente novoCliente = clienteService.cadastrarCliente(cliente);
-            return ResponseEntity.ok(novoCliente);
+            return ResponseEntity.ok("Cliente cadastrado com sucesso! Cliente: " + novoCliente);
         } catch(Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }
     }
         
     @GetMapping("/listarClientes")
     public ResponseEntity<List<Cliente>> listarClientes() {
-        List<Cliente> clientes = clienteService.listarClientes();
-        return ResponseEntity.ok(clientes);
+        try{
+            List<Cliente> clientes = clienteService.listarClientes();
+            return ResponseEntity.ok(clientes);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
     
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
-        Cliente cliente = clienteService.buscarClientePorId(id);
-        return ResponseEntity.ok(cliente);
+        try{
+            Cliente cliente = clienteService.buscarClientePorId(id);
+            return ResponseEntity.ok(cliente);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
-        return ResponseEntity.ok(clienteService.atualizar(id, cliente));
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
+        try{
+            Cliente clienteAtualizado = clienteService.atualizar(id, cliente);
+            return ResponseEntity.ok("Cliente atualizado com sucesso! Cliente: " + clienteAtualizado);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        clienteService.excluir(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> excluir(@PathVariable Long id) {
+        try{
+            clienteService.excluir(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! Id: " + id);
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
+        }
     }
 }

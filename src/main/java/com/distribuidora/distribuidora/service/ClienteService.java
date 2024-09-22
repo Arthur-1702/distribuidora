@@ -12,7 +12,7 @@ import com.distribuidora.distribuidora.repository.PlanoPagamentoRepository;
 
 import java.util.List;
 
-@Service // ponto de injeção de dependências
+@Service
 public class ClienteService {
 
     @Autowired

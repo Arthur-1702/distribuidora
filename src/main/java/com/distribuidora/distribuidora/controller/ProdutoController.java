@@ -20,7 +20,7 @@ public class ProdutoController {
     public ResponseEntity<String> criarProduto(@RequestBody ProdutoDTO produto) {
         try {
             Produto novoProduto = produtoService.createProduto(produto);
-            return ResponseEntity.status(HttpStatus.OK).body("Produto criado com sucesso! Produto: "+novoProduto);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto criado com sucesso! ID: "+ novoProduto.getCodProduto());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
         }
@@ -50,7 +50,7 @@ public class ProdutoController {
     public ResponseEntity<String> updateProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
         try {
             Produto updatedProduto = produtoService.updateProduto(id, produtoDTO);
-            return ResponseEntity.status(HttpStatus.OK).body("Produto atualizado com sucesso! Produto: " + updatedProduto);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto atualizado com sucesso! ID: "+ updatedProduto.getCodProduto());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
         }
@@ -60,7 +60,7 @@ public class ProdutoController {
     public ResponseEntity<String> deletarProduto(@PathVariable Long id) {
         try {
             produtoService.deleteProduto(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! Id: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! ID: " + id);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " + e.getMessage());
         }

@@ -22,7 +22,7 @@ public class FornecedorController {
      public ResponseEntity<String> criarFornecedor(@RequestBody FornecedorDTO fornecedor) {
         try{
             Fornecedor novoFornecedor = fornecedorService.cadastrarFornecedor(fornecedor);
-            return ResponseEntity.ok("Fornecedor cadastrado com sucesso! Fornecedor: " + novoFornecedor);
+            return ResponseEntity.ok("Fornecedor cadastrado com sucesso! ID: " + novoFornecedor.getCodFornecedor());
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }
@@ -52,7 +52,7 @@ public class FornecedorController {
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody FornecedorDTO fornecedor) {
         try{
             Fornecedor fornecedorAtualizado = fornecedorService.atualizar(id, fornecedor);
-            return ResponseEntity.ok("Fornecedor atualizado com sucesso! Fornecedor: " + fornecedorAtualizado);
+            return ResponseEntity.ok("Fornecedor atualizado com sucesso! ID: " + id);
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }
@@ -62,7 +62,7 @@ public class FornecedorController {
     public ResponseEntity<String> excluir(@PathVariable Long id) {
         try{
             fornecedorService.excluir(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! Id: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! ID: " + id);
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }

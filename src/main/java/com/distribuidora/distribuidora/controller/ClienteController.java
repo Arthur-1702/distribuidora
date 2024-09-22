@@ -22,7 +22,7 @@ public class ClienteController {
      public ResponseEntity<String> criarCliente(@RequestBody ClienteDTO cliente) {
         try{
             Cliente novoCliente = clienteService.cadastrarCliente(cliente);
-            return ResponseEntity.ok("Cliente cadastrado com sucesso! Cliente: " + novoCliente);
+            return ResponseEntity.ok("Cliente cadastrado com sucesso! ID: " + novoCliente.getCodCliente());
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }
@@ -52,7 +52,7 @@ public class ClienteController {
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
         try{
             Cliente clienteAtualizado = clienteService.atualizar(id, cliente);
-            return ResponseEntity.ok("Cliente atualizado com sucesso! Cliente: " + clienteAtualizado);
+            return ResponseEntity.ok("Cliente atualizado com sucesso! ID: " + clienteAtualizado.getCodCliente());
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }
@@ -62,7 +62,7 @@ public class ClienteController {
     public ResponseEntity<String> excluir(@PathVariable Long id) {
         try{
             clienteService.excluir(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! Id: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("Produto deletado com sucesso! ID: " + id);
         } catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: "+ e.getMessage());
         }

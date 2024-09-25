@@ -1,7 +1,16 @@
 package com.distribuidora.distribuidora.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TBCLIENTE")
@@ -15,10 +24,10 @@ public class Cliente {
     @Column(name = "NOMECLIENTE", nullable = false, length = 40)
     private String nomeCliente;
 
-    @Column(name = "CGCENT", nullable = false, length = 14)
+    @Column(name = "CGCENT", nullable = false, length = 30)
     private String cgcEnt; // Pode ser usado tanto para CNPJ quanto para CPF
 
-    @Column(name = "RAMOATIVIDADE", nullable = false, length = 20)
+    @Column(name = "RAMOATIVIDADE", nullable = false, length = 50)
     private String ramoAtividade;
 
     @Column(name = "ENDERECOCOM", nullable = false, length = 50)
@@ -36,7 +45,7 @@ public class Cliente {
     @Column(name = "UFCOM", nullable = false, length = 2)
     private String ufComercial;
 
-    @Column(name = "CEPCOM", nullable = false, length = 8)
+    @Column(name = "CEPCOM", nullable = false, length = 20)
     private String cepComercial;
 
     @Column(name = "ENDERECOENT", length = 50)
@@ -54,7 +63,7 @@ public class Cliente {
     @Column(name = "UFENT", length = 2)
     private String ufEntrega;
 
-    @Column(name = "CEPENT", length = 8)
+    @Column(name = "CEPENT", length = 10)
     private String cepEntrega;
 
     @Column(name = "ENDERECOCOB", length = 50)
@@ -72,13 +81,13 @@ public class Cliente {
     @Column(name = "UFCOB", length = 2)
     private String ufCobranca;
 
-    @Column(name = "CEPCOB", length = 8)
+    @Column(name = "CEPCOB", length = 15)
     private String cepCobranca;
 
-    @Column(name = "TELEFONE", nullable = false, length = 11)
+    @Column(name = "TELEFONE", nullable = false, length = 15)
     private String telefone;
 
-    @Column(name = "EMAIL", nullable = false, length = 20)
+    @Column(name = "EMAIL", nullable = false, length = 50)
     private String email;
 
     @Column(name = "CONTATOCARGO1", length = 20)
